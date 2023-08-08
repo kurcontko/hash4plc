@@ -16,8 +16,8 @@ VERSION : 0.1
    END_VAR
 
    VAR CONSTANT 
-      SEED : DWord := 16#811C9DC5;   // Initial seed value for FNV-1a
-      FNV_PRIME : DWord := 16#01000193;   // FNV-1a prime number
+      SEED : DWord := 2_166_136_261;   // Initial seed value for FNV-1a
+      FNV_PRIME : DWord := 16_777_619;   // FNV-1a prime number
    END_VAR
 
 
@@ -33,11 +33,7 @@ BEGIN
 	FOR #i := 1 TO LEN(#str) DO
 	    
 	    #c := #str[#i];
-	    
-	    // XOR current hash value with character byte
 	    #h := #h XOR #c;
-	    
-	    // Multiply hash with the specific prime value
 	    #h := #h * #FNV_PRIME; 
 	
 	END_FOR;

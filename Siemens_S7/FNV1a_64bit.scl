@@ -1,0 +1,43 @@
+﻿FUNCTION "FNV1a_64bit" : LWord
+TITLE = FNV1-a - Hashing Function
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : kurcontko
+FAMILY : Hash4PLC
+VERSION : 0.1
+//Implementation of the FNV-1a hash function for 64-bit hashing. Suitable for fast hash generation with a good distribution characteristic.
+   VAR_INPUT 
+      str : String;   // Input string to be hashed
+   END_VAR
+
+   VAR_TEMP 
+      h : LWord;   // Running hash value
+      i : Int;   // Loop counter for string iteration
+      c : Byte;   // Individual character value from the input string
+   END_VAR
+
+   VAR CONSTANT 
+      SEED : LWord := 14_695_981_039_346_656_037;   // Initial seed value for FNV-1a
+      FNV_PRIME : LWord := 1_099_511_628_211;   // FNV-1a prime number
+   END_VAR
+
+
+BEGIN
+	//    FNV-1a Hash Function:
+	//    ---------------------
+	//    - A non-cryptographic hash function known for its fast performance and low collision rate.
+	//    - Produces a 64-bit hash value for a given string input.
+	//    - The algorithm is based on iteratively applying XOR and multiplication operations over each byte of the string.
+	
+	#h := #SEED;
+	
+	FOR #i := 1 TO LEN(#str) DO
+	    
+	    #c := #str[#i];
+	    #h := #h XOR #c;
+	    #h := #h * #FNV_PRIME; 
+	
+	END_FOR;
+	
+	#FNV1a_64bit := #h;
+END_FUNCTION
+
